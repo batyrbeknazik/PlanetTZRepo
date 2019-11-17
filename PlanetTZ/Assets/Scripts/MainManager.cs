@@ -11,11 +11,18 @@ public class MainManager : MonoBehaviour
     public PlanetScriptableObjectScript moon_script_obj;
     public PlanetScriptableObjectScript jupiter_script_obj;
 
-    protected GameObject panel;
-    protected GameObject ball;
+    public GameObject ball;
+    public GameObject panel;
 
+    public GameObject playCanvas;
+    public GameObject menuCanvas;
 
     private static MainManager _instance;
+
+    public Text ballHitText;
+
+    public int ballHit = 0;
+
 
     public static MainManager Instance
     {
@@ -41,31 +48,59 @@ public class MainManager : MonoBehaviour
         {
             _instance = this;
         }
+        ballHitText.text = "BallHit: " + ballHit.ToString();
+
+
+    }
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            menuCanvas.SetActive(true);
+            playCanvas.SetActive(false);
+            ballHitText.text = "BallHit: "+ballHit.ToString();
+        }
+
 
     }
     public void ChangeScene(string planet)
     {
-        Earth earth = new Earth();
+        Planet planeta = new Planet();
         //Moon moon = new Moon();
         //Jupiter jupiter = new Jupiter();
-        panel = GameObject.Find("Canvas/Panel");
-        ball = GameObject.Find("Canvas/Panel/ball");
+        //Debug.Log("load scene");
 
-        SceneManager.LoadScene("PlanetScene");
+        //void SceneLoadedEvent(Scene scene, LoadSceneMode mode)
+        //{
+
+        //}
+        menuCanvas.SetActive(false);
+        playCanvas.SetActive(true);
         switch (planet)
         {
             case "earth":
-                earth.ChangeDecoration(earth_script_obj,panel,ball);
+                planeta.ChangeDecoration(earth_script_obj, panel, ball);
+                //gameController.Instance.Init(earth_script_obj.skycolor,earth_script_obj.gravity);
+
                 break;
-            //case "moon":
-            //    moon.ChangeDecoration(moon_script_obj);
-            //    break;
-            //case "jupiter":
-            //    jupiter.ChangeDecoration(jupiter_script_obj);
-            //    break;
+            case "moon":
+                //planeta.ChangeDecoration(moon_script_obj, panel, ball);
+                planeta.ChangeDecoration(moon_script_obj, panel, ball);
+
+                break;
+            case "jupiter":
+                //planeta.ChangeDecoration(jupiter_script_obj, panel, ball);
+                planeta.ChangeDecoration(jupiter_script_obj, panel, ball);
+
+                break;
 
 
         }
+        //SceneManager.sceneLoaded += SceneLoadedEvent;
+        //SceneManager.LoadScene("PlanetScene");
+        //SceneManager.sceneLoaded -= SceneLoadedEvent;
+        //Debug.Log("123");
+        
         
     }
 
@@ -80,7 +115,7 @@ interface IPlanet
 
 
 }
-class Earth : IPlanet
+class Planet : IPlanet
 {
     
 
@@ -92,8 +127,9 @@ class Earth : IPlanet
         gravity = planet.gravity;
         skycolor = planet.skycolor;
         backgroundColor.GetComponent<Image>().sprite = skycolor;
-        ball.GetComponent<Ball>().bouncy.bounciness = gravity;
-        //Debug.Log(gravity);
+
+        ball.GetComponent<Ball>().bouncy.bounciness = gravity/10f;
+        Debug.Log(gravity);
     }
 
     
@@ -105,11 +141,13 @@ class Earth : IPlanet
 
 //    public float gravity { get; set; }
 //    public Sprite skycolor { get; set; }
-//    public void ChangeDecoration(PlanetScriptableObjectScript planet)
+//    public void ChangeDecoration(PlanetScriptableObjectScript planet, GameObject backgroundColor, GameObject ball)
 //    {
 //        gravity = planet.gravity;
 //        skycolor = planet.skycolor;
-//        Debug.Log(gravity);
+//        backgroundColor.GetComponent<Image>().sprite = skycolor;
+//        ball.GetComponent<Ball>().bouncy.bounciness = gravity;
+//        //Debug.Log(gravity);
 //    }
 
 
@@ -121,11 +159,13 @@ class Earth : IPlanet
 
 //    public float gravity { get; set; }
 //    public Sprite skycolor { get; set; }
-//    public void ChangeDecoration(PlanetScriptableObjectScript planet)
+//    public void ChangeDecoration(PlanetScriptableObjectScript planet, GameObject backgroundColor, GameObject ball)
 //    {
 //        gravity = planet.gravity;
 //        skycolor = planet.skycolor;
-//        Debug.Log(gravity);
+//        backgroundColor.GetComponent<Image>().sprite = skycolor;
+//        ball.GetComponent<Ball>().bouncy.bounciness = gravity;
+//        //Debug.Log(gravity);
 //    }
 
 

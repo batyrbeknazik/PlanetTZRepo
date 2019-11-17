@@ -12,7 +12,7 @@ public class Ball : MonoBehaviour
 
        
         
-        //Debug.Log(bouncy.bounciness);
+        Debug.Log(bouncy.bounciness);
 
         //Debug.Log(MainManager.Instance.earth_script_obj.gravity);
 
@@ -33,6 +33,8 @@ public class Ball : MonoBehaviour
             //Debug.Log(Input.mousePosition);
         }
     }
+
     
 
+    
 }
