@@ -54,11 +54,13 @@ public class MainManager : MonoBehaviour
     }
     void Update()
     {
+        
         if (Input.GetKey(KeyCode.Escape))
         {
             menuCanvas.SetActive(true);
             playCanvas.SetActive(false);
             ballHitText.text = "BallHit: "+ballHit.ToString();
+            ball.transform.position = new Vector3(-4f, 0f,0f);
         }
 
 
